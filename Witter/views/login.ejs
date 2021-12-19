@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("partials/head") %>
+<%- include("partials/loginGraphic") %>
+<body class = "center">
+  <br>
+  <br> 
+  <br> 
+  <br>
+  
+  <h2>Login to Witter</h2>
+  <br>
+
+  <div class="form-container">
+    <form class="form-location" method="POST" action="/">
+      <span>Username:</span>
+      <input type="text" name="username">
+      <span class="error-message"></span>
+      <br><br>
+      <span>Password:</span>
+      <input type="password" name="pwd">
+      <span class="error-message"></span>
+      <br><br>
+      <button>Login</button>
+    </form>
+  </div><br>
+
+  <% if(typeof error != "undefined") {%>
+    <%= error %>
+  <%}%>
+
+  <br><br><span>New User?</span> <a href='/signup'>Sign up</a>
+</body>
+</html>

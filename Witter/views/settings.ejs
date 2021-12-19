@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<%- include("partials/head") %>
+<body class="flex">
+  
+
+  <div class="column" id="menu">
+   <%- include("partials/homeGraphic") %>
+    <br><br><br>
+    <div id="menu-items">
+      <h1><a href="/home">Home</a></h1><br><br>
+      <h1><a href="/profile">Profile</a></h1><br><br>
+      <h1><a href="/settings">Settings</a></h1><br><br>
+      <form action="/logout">
+        <h1><a href="/logout">Log Out</a></h1>
+      </form>
+    </div>
+  </div>
+  
+  <div class="column" id="timeline">
+    <h2 class="page-title">Settings</h2>
+    <div class="form-container">
+      <form action="/settings" method="POST" class="form-location">
+        <span>Display Name:</span><input type="text" name="displayName" value="<%=data[0].displayname%>"><br><br>
+        <span>Email:</span><input type="text" name="email" value="<%=data[0].email%>"><br><br>
+        <span>Username:</span><input type="text" name="userName" value="<%=data[0].username%>"><br><br>
+        <span>Sex:</span>
+
+        <input type="radio" id="radio1" name="userSex" value="m"
+        <% if(data[0].sex == "m") {%>
+          checked
+        <%}%>
+        > 
+        <span>Male</span>
+        <input type="radio" id="radio2" name="userSex" value="f"
+        <% if(data[0].sex == "f") {%>
+          checked
+        <%}%>
+        > <span>Female</span> <br><br>
+        <button>Update your Profile</button><br><br><br>
+      </form>
+    </div>
+    <div class="form-container">
+      <form method="POST" action="/passwordChange" class="form-location">
+        <span>Password:</span><input type="text" name="password"><br><br>
+        <button>Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="column"  id="trending">
+    <div class="center" id="spotify">
+      <h2>Spotify</h2>
+      <p>Music chosen by David</p>
+      <p>(Please LOWER system volume before hitting play)</p>
+      <iframe src="https://open.spotify.com/embed/playlist/<%=music%>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br><br>
+    </div>
+
+    <span id="trending-list">
+      <h2>Currently Trending</h2>
+      <% for(let i = 0; i < 10; i++) {%>
+        <h3><a href="<%= twits[0].trends[i].url%>" target="_blank"><%= twits[0].trends[i].name%></a></h3>
+        <% if (twits[0].trends[i].tweet_volume > 0) {%>
+          <h3>Tweets: <%= twits[0].trends[i].tweet_volume%></h3>
+        <%}else {%>
+          <h3>Tweets: <i>updating...</i></h3>
+        <%}%>
+        <br>
+      <%}%>
+    </span>
+  </div>
+</body>
+</html>

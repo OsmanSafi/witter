@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<%- include("partials/head") %>
+<%- include("partials/loginGraphic") %>
+<br> 
+<br> 
+<br> 
+<br> 
+<body class="center">
+<br><h2> Create your account </h2><br>
+
+<div class="form-container">
+  <form name="signup" class="form-location" method="POST" action="/signup" onsubmit="return validateForm()">
+    <span>Display Name:</span>
+    <input type="text" name="name" minlength="3">
+    <br><br>
+    <span>Sex:</span>
+    <input type="radio" id="radio1" name="userSex" value="m"> <span>Male</span>
+    <input type="radio" id="radio2" name="userSex" value="f"> <span>Female</span>
+    <br><br>
+    <span>Email:</span>
+    <input id="em" type="email" name="email">
+    <br><span id="email-message" class="error-message-small"></span><br>
+    <span>Username:<span>
+    <input id="un" type="text" name="username" minlength="3">
+    <br><span id="username-message" class="error-message-small"></span><br>
+    <span>Password:</span>
+    <input type="password" name="pwd" minlength="3">
+    <br><br>
+    <button id="sign-up-button"> Sign up </button>
+  </form><br>
+</div>
+
+<% if(typeof error != "undefined") {%>
+  <%= error %>
+<%}%>
+<script src="/JS/signup.js"></script>
+</body>
+</html>

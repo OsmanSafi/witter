@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Witter</title>
+  <link rel="stylesheet" href="/CSS/styles.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+</head>
+<body class="flex">
+  <div class="column" id="menu">
+   <%- include("partials/homeGraphic") %>
+    <br><br><br>
+    <div id="menu-items">
+      <h1><a href="/home">Home</a></h1><br><br>
+      <h1><a href="/profile">Profile</a></h1><br><br>
+      <h1><a href="/settings">Settings</a></h1><br><br>
+      <form action="/logout">
+        <h1><a href="/logout">Log Out</a></h1>
+      </form>
+    </div>
+  </div>
+  
+  <div class="column" id="timeline">
+    <h2 class="page-title">Profile</h2> 
+    <div id="profile">
+      <img id="profile-pic" src="<%=data[0].picture%>">
+      <div><%=data[0].displayname%></div>
+      <div>@<%=data[0].username%></div>
+      <div>
+        <% if (data[0].sex == "m") {%>
+          Sex: Male
+        <%}else {%>
+          Sex: Female
+        <%}%>
+      </div>
+      <div><%=data[0].email%></div>
+      <div class="dropdown">
+        <br>
+        <button class="dropdown-button">People Followed</button>
+        <div class="dropdown-content">
+          <% for(let i = 0; i < follow_list.length; i++) {%>
+            <a href="/profile?userid=<%=follow_list[i].followed%>">@<%=follow_list[i].username%></a>
+          <%}%>
+        </div>
+      </div>
+      <br><br>
+      <form id="followForm" action="/<%= userFollowed === true ? 'unfollow' : 'follow' %>" method="POST">
+        <input type="hidden" name="userid" value="<%=data[0].userid%>">
+        <button id="follow-button">
+        <%= userFollowed === true ? 'Unfollow' : 'Follow' %>
+        </button>
+      </form>
+    </div>
+    <div id="my-weets">
+      <% for(let i = 0; i < weets.length; i++) {%>
+        <div class="weet">
+          <div id="weet-pro">
+            <img src="<%=data[0].picture%>"><br>
+            <div class="flex column" id="user-info">
+            <span id="username"><%=data[0].displayname%></span>
+            <span id="displayName">@<%=data[0].username%></span>
+            </div>
+          </div>
+          <p id="weet-text"><%=weets[i].weet%></p>
+        </div>
+      <%}%>
+
+    </div>
+  </div>
+
+  <div class="column"  id="trending">
+    <div class="center" id="spotify">
+      <h2>Spotify</h2>
+      <p>Music chosen by David</p>
+      <p>(Please LOWER system volume before hitting play)</p>
+      <iframe src="https://open.spotify.com/embed/playlist/<%=music%>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br><br>
+    </div>
+
+    <span id="trending-list">
+      <h2>Currently Trending</h2>
+      <% for(let i = 0; i < 10; i++) {%>
+        <h3><a href="<%= twits[0].trends[i].url%>" target="_blank"><%= twits[0].trends[i].name%></a></h3>
+        <% if (twits[0].trends[i].tweet_volume > 0) {%>
+          <h3>Tweets: <%= twits[0].trends[i].tweet_volume%></h3>
+        <%}else {%>
+          <h3>Tweets: <i>updating...</i></h3>
+        <%}%>
+        <br>
+      <%}%>
+    </span>
+  </div>
+</body>
+</html>

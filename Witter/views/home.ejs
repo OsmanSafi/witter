@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<%- include("partials/head") %>
+<body class="flex">
+  <div class="column" id="menu">
+  <%- include("partials/homeGraphic") %>
+    <br><br><br>
+    <div id="menu-items">
+      <h1><a href="/home">Home</a></h1><br><br>
+      <h1><a href="/profile">Profile</a></h1><br><br>
+      <h1><a href="/settings">Settings</a></h1><br><br>
+      <form action="/logout">
+        <h1><a href="/logout">Log Out</a></h1>
+      </form>
+    </div>
+  </div>
+  
+  <div class="column" id="timeline">
+    <h2 class="page-title">Home</h2>
+    <div id="new-weet">
+      <form method="POST" name="newWeet" onsubmit="return validateForm()">
+        <textarea name="weet" placeholder="What's happening?" rows="5" cols="44"></textarea><br>
+        <button id="weet-button">Weet</button><br><br>
+      </form>
+      <span id="new-weet-validation"></span>
+      <br>
+    </div>
+
+    <div id="my-weets">
+      <% for(let i = 0; i < weets.length; i++) {%>
+        <div class="weet">
+          <div id="weet-pro">
+            <img src="<%=weets[i].picture%>"><br>
+            <div class="flex column" id="user-info">
+              <span id="displayName"><%=weets[i].displayname%></span>
+              <span id="username"><a href="/profile?userid=<%=weets[i].userid%>">@<%=weets[i].username%></a></span>
+            </div>
+          </div>
+          <p id="weet-text"><%=weets[i].weet%></p>
+        </div>
+      <%}%>
+    
+    </div>
+  </div>
+
+  <div class="column"  id="trending">
+    <div class="center" id="spotify">
+      <h2>Spotify</h2>
+      <p>Music chosen by David</p>
+      <p>(Please LOWER system volume before hitting play)</p>
+      <iframe src="https://open.spotify.com/embed/playlist/<%=music%>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <br><br>
+    </div>
+
+    <span id="trending-list">
+      <h2>Currently Trending</h2>
+      <% for(let i = 0; i < 10; i++) {%>
+        <h3><a href="<%= twits[0].trends[i].url%>" target="_blank"><%= twits[0].trends[i].name%></a></h3>
+        <% if (twits[0].trends[i].tweet_volume > 0) {%>
+          <h3>Tweets: <%= twits[0].trends[i].tweet_volume%></h3>
+        <%}else {%>
+          <h3>Tweets: <i>updating...</i></h3>
+        <%}%>
+        <br>
+      <%}%>
+    </span>
+  </div>
+  <script src="/JS/home.js"></script>
+</body>
+</html>
